@@ -15,10 +15,10 @@ jobs:
       - name: First job
         run: echo "Running on my self-hosted macOS runner"
       
-      - name: Install Terraform
-        uses: little-core-labs/install-terraform@v2.0.0
-        with:
-          version: 1.6.6   # 👈 put the Terraform version you want
+      # - name: Install Terraform
+      #   uses: little-core-labs/install-terraform@v2.0.0
+      #   with:
+      #     version: 1.6.6   # 👈 put the Terraform version you want
 
       - name: Azure Login
         uses: Azure/login@v2.3.0
@@ -36,9 +36,9 @@ jobs:
       - name: Terraform Init
         run: |
           terraform init \
-            -backend-config=" resource_group_name = "pardeeptestrg"   \
-            -backend-config="storage_account_name = "pardeeptestsg"  \
-            -backend-config="container_name = "pardeepcontainertest"\
+            -backend-config=" resource_group_name=pardeeptestrg"   \
+            -backend-config="storage_account_name=pardeeptestsg"  \
+            -backend-config="container_name=pardeepcontainertest" \
             -backend-config="key=githubaction.terraform.tfstate"
 
       # 5. Terraform Plan
