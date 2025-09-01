@@ -34,17 +34,18 @@ jobs:
       
        # 4. Terraform Init (with backend config)
       - name: Terraform Init
+        working-directory: .   # 👈 repo root (where main.tf exists)
         run: |
           terraform init \
-            -backend-config=" resource_group_name=pardeeptestrg"   \
-            -backend-config="storage_account_name=pardeeptestsg"  \
+            -backend-config="resource_group_name=pardeeptestrg" \
+            -backend-config="storage_account_name=pardeeptestsg" \
             -backend-config="container_name=pardeepcontainertest" \
             -backend-config="key=githubaction.terraform.tfstate"
 
-      # 5. Terraform Plan
       - name: Terraform Plan
+        working-directory: .
         run: terraform plan -out=tfplan
 
-      # 6. Terraform Apply
       - name: Terraform Apply
+        working-directory: .
         run: terraform apply -auto-approve tfplan
