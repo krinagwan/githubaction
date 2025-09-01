@@ -10,3 +10,8 @@ jobs:
     steps:
       - name: First job
         run: echo "Running on my self-hosted macOS runner"
+      
+      - name: Install Terraform
+        uses: little-core-labs/install-terraform@v2.0.0
+        with:
+          version: 1.6.6   # 👈 put the Terraform version you want
