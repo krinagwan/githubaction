@@ -1,51 +1,51 @@
-name: ci
+# name: ci
 
-on:
-  push:
-    branches: main
+# on:
+#   push:
+#     branches: main
 
-permissions:
-  id-token: write   # 👈 required for OIDC
-  contents: read    # 👈 required for actions/checkout
+# permissions:
+#   id-token: write   # 👈 required for OIDC
+#   contents: read    # 👈 required for actions/checkout
   
-jobs:
-  job:
-    runs-on: [self-hosted, macos]
-    steps:
-      - name: First job
-        run: echo "Running on my self-hosted macOS runner"
+# jobs:
+#   job:
+#     runs-on: [self-hosted, macos]
+#     steps:
+#       - name: First job
+#         run: echo "Running on my self-hosted macOS runner"
       
-      # - name: Install Terraform
-      #   uses: little-core-labs/install-terraform@v2.0.0
-      #   with:
-      #     version: 1.6.6   # 👈 put the Terraform version you want
+#       # - name: Install Terraform
+#       #   uses: little-core-labs/install-terraform@v2.0.0
+#       #   with:
+#       #     version: 1.6.6   # 👈 put the Terraform version you want
 
-      - name: Azure Login
-        uses: Azure/login@v2.3.0
-        with:
+#       - name: Azure Login
+#         uses: Azure/login@v2.3.0
+#         with:
         
-          client-id: 912307b0-0182-498b-bc35-68923aba3eb0
-          # TenantId of the Azure Service principal created.
-          tenant-id: df7d1ae3-5176-4f7e-914b-b0fbb8b85c9f
-          # Azure subscriptionId
-          subscription-id: 74282b2c-f351-49d2-8fc1-345ec077bafb
-          # Set this value to true to enable Azure PowerShell Login in addition to Azure CLI login
+#           client-id: 912307b0-0182-498b-bc35-68923aba3eb0
+#           # TenantId of the Azure Service principal created.
+#           tenant-id: df7d1ae3-5176-4f7e-914b-b0fbb8b85c9f
+#           # Azure subscriptionId
+#           subscription-id: 74282b2c-f351-49d2-8fc1-345ec077bafb
+#           # Set this value to true to enable Azure PowerShell Login in addition to Azure CLI login
           
       
-       # 4. Terraform Init (with backend config)
-      - name: Terraform Init
-        working-directory: .   # 👈 repo root (where main.tf exists)
-        run: |
-          terraform init \
-            -backend-config="resource_group_name=pardeeptestrg" \
-            -backend-config="storage_account_name=pardeeptestsg" \
-            -backend-config="container_name=pardeepcontainertest" \
-            -backend-config="key=githubaction.terraform.tfstate"
+#        # 4. Terraform Init (with backend config)
+#       - name: Terraform Init
+#         working-directory: .   # 👈 repo root (where main.tf exists)
+#         run: |
+#           terraform init \
+#             -backend-config="resource_group_name=pardeeptestrg" \
+#             -backend-config="storage_account_name=pardeeptestsg" \
+#             -backend-config="container_name=pardeepcontainertest" \
+#             -backend-config="key=githubaction.terraform.tfstate"
 
-      - name: Terraform Plan
-        working-directory: .
-        run: terraform plan -out=tfplan
+#       - name: Terraform Plan
+#         working-directory: .
+#         run: terraform plan -out=tfplan
 
-      - name: Terraform Apply
-        working-directory: .
-        run: terraform apply -auto-approve tfplan
+#       - name: Terraform Apply
+#         working-directory: .
+#         run: terraform apply -auto-approve tfplan
